@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <title>The Lightning Network</title>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <style type="text/css">
+    html, body {
+	  height: 100%;
+	  width: 100%;
+	  margin: 0;
+	}
+    #mynetwork {
+      width: 100%;
+      height: 100%;
+	  margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="mynetwork">Loading...</div>
+
+<script type="text/javascript">
+jQuery.getJSON("https://lightning.roose.io:12345/graph.json", function(data) {
+  var options = {
+	nodes: {
+	  shape: "dot",
+	  scaling:{
+	    min: 13,
+	    max: 60
+	  }
+	},
+	edges: {
+	  color: {
+		inherit: "both"
+	  },
+	  scaling:{
+	    min: 1,
+	    max: 13
+	  }
+	},
+	layout: {
+	  improvedLayout: false
+	},
+	physics: {
+	  repulsion: {
+	    springLength: 500,
+		springConstant: 0.03
+	  },
+	  timestep: 0.3
+	},
+	groups: {
+	  faucet: {
+		  color: {
+			background: "lightgreen",
+			border: "green"
+		  }
+	  },
+	  peer: {
+		  color: {
+		    background: "yellow",
+			border: "#f4dc42"
+		  }
+	  },
+	  steven: {
+		  color: {
+			background: "red",
+			border: "#cc0000"
+		  }
+	  }
+    }
+  }
+
+  var container = document.getElementById('mynetwork');
+  var network = new vis.Network(container, data, options);
+}, console.log);
+
+</script>
+</body>
+</html>
